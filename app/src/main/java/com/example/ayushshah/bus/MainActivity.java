@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements
         EditText dst = (EditText)findViewById(R.id.dstText);
         String destination = dst.getText().toString();
         Geocoder coder = new Geocoder(this);
-        Toast.makeText(getApplicationContext(), "Alive", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Alive", Toast.LENGTH_LONG).show();
         try {
             ArrayList<Address> addresses = (ArrayList<Address>) coder
                     .getFromLocationName(destination, 100);
@@ -97,16 +97,23 @@ public class MainActivity extends FragmentActivity implements
         b.putDouble("dstLng", dLng);
         intent.putExtras(b);
       */
-        intent.putExtra("srcLat", sLat.toString());
-        intent.putExtra("srcLng", sLng.toString());
-        intent.putExtra("dstLat", dLat.toString());
-        intent.putExtra("dstLng", dLng.toString());
+        try {
+            intent.putExtra("srcLat", sLat.toString());
+            intent.putExtra("srcLng", sLng.toString());
+            intent.putExtra("dstLat", dLat.toString());
+            intent.putExtra("dstLng", dLng.toString());
      /*   arr.add(sLng.toString());
         arr.add(dLat.toString());
         arr.add(dLng.toString());*/
 
-        Toast.makeText(getApplicationContext(), "S " + sLat.toString() + " " + sLng.toString() + "D " + dLat.toString() + " " + dLng.toString(), Toast.LENGTH_LONG).show();
-        startActivity(intent);
+            Toast.makeText(getApplicationContext(), "S " + sLat.toString() + " " + sLng.toString() + "D " + dLat.toString() + " " + dLng.toString(), Toast.LENGTH_LONG).show();
+            startActivity(intent);
+        }
+        catch(NullPointerException e)
+        {
+            //Toast.makeText(getApplicationContext(), "Please switch on GPS", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"Please switch on GPS",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -135,33 +142,33 @@ public class MainActivity extends FragmentActivity implements
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Location services connected.");
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        sLat = location.getLatitude();
-        sLng = location.getLongitude();
-        try {
-            geocodeMatches =
-                    new Geocoder(this).getFromLocation(sLat, sLng, 1);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        if (location!=null) {
+            sLat = location.getLatitude();
+            sLng = location.getLongitude();
+            try {
+                geocodeMatches =
+                        new Geocoder(this).getFromLocation(sLat, sLng, 1);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
-        if (!geocodeMatches.isEmpty())
-        {
-            Address1 = geocodeMatches.get(0).getAddressLine(0);
-            Address2 = geocodeMatches.get(0).getAddressLine(1);
-            State = geocodeMatches.get(0).getAdminArea();
-            Zipcode = geocodeMatches.get(0).getPostalCode();
-            Country = geocodeMatches.get(0).getCountryName();
+            if (!geocodeMatches.isEmpty()) {
+                Address1 = geocodeMatches.get(0).getAddressLine(0);
+                Address2 = geocodeMatches.get(0).getAddressLine(1);
+                State = geocodeMatches.get(0).getAdminArea();
+                Zipcode = geocodeMatches.get(0).getPostalCode();
+                Country = geocodeMatches.get(0).getCountryName();
+            }
+            TextView source = (TextView) findViewById(R.id.srcText);
+            source.setText(Address1 + " " + Address2);
+            //Toast.makeText(getApplicationContext(), Address1 + Address2 + State, Toast.LENGTH_LONG).show();
+            if (location == null) {
+                // Blank for a moment...
+            } else {
+                handleNewLocation(location);
+            }
         }
-        TextView source = (TextView)findViewById(R.id.srcText);
-        source.setText(Address1+" "+Address2);
-        //Toast.makeText(getApplicationContext(), Address1 + Address2 + State, Toast.LENGTH_LONG).show();
-        if (location == null) {
-            // Blank for a moment...
-        }
-        else {
-            handleNewLocation(location);
-        };
     }
 
     private void handleNewLocation(Location location) {
