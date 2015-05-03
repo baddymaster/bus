@@ -6,4 +6,14 @@
     <string name="title_activity_list_bus">ListBus</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_activity2">Map</string>
+
+    <string-array name="destination_array">
+        <item>Faculty Gate</item>
+        <item>Main Gate</item>
+        <item>Hostel</item>
+        <item>Student Center</item>
+        <item>Academic Building</item>
+        <item>Faculty Building</item>
+    </string-array>
+
 </resources>

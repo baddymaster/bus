@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
@@ -36,6 +38,28 @@ public class MainActivity extends FragmentActivity implements
     String Country;
     Double sLat, sLng, dLat, dLng;
     private GoogleApiClient mGoogleApiClient;
+    private Spinner spinner1;
+
+
+    public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+            Toast.makeText(parent.getContext(),
+                    "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+        }
+
+    }
+
+    public void addListenerOnSpinnerItemSelection() {
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
+        spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +79,8 @@ public class MainActivity extends FragmentActivity implements
                 go(v);
             }
         });
+
+
     }
 
     @Override
@@ -72,20 +98,46 @@ public class MainActivity extends FragmentActivity implements
     }
 
     public void go(View view){
-        EditText dst = (EditText)findViewById(R.id.dstText);
-        String destination = dst.getText().toString();
-        Geocoder coder = new Geocoder(this);
+        //EditText dst = (EditText)findViewById(R.id.dstText);
+        //String destination = dst.getText().toString();
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
+        String destination = String.valueOf(spinner1.getSelectedItem());
+        //Geocoder coder = new Geocoder(this);
         //Toast.makeText(getApplicationContext(), "Alive", Toast.LENGTH_LONG).show();
-        try {
-            ArrayList<Address> addresses = (ArrayList<Address>) coder
+        //try {
+            /*ArrayList<Address> addresses = (ArrayList<Address>) coder
                     .getFromLocationName(destination, 100);
             for (Address add : addresses) {
                 dLat = add.getLatitude();
-                dLng = add.getLongitude();
-            }
-        }catch (IOException e) {
+                dLng = add.getLongitude();*/
+                if(destination.equals("Faculty Building")) {
+                    dLat = 28.5441084;
+                    dLng = 77.2707973;
+                }
+                if(destination.equals("Faculty Gate")) {
+                    dLat = 28.5450297;
+                    dLng = 77.2700409;
+                }
+                if(destination.equals("Main Gate")) {
+                    dLat = 28.5471172;
+                    dLng = 77.2724013;
+                }
+                if(destination.equals("Hostel")) {
+                    dLat = 28.546848;
+                    dLng = 77.2735676;
+                }
+                if(destination.equals("Student Center")) {
+                    dLat = 28.5462535;
+                    dLng = 77.2729699;
+                }
+                if(destination.equals("Academic Building")) {
+                    dLat = 28.5448498;
+                    dLng = 77.2722461;
+                }
+            //}
+        /*}catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         Intent intent;
         intent = new Intent(this, MapsActivity.class);
