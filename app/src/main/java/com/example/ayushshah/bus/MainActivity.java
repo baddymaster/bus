@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
@@ -24,6 +25,7 @@ public class MainActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
+    public ImageButton FAB;
     public static final String TAG = MapsActivity.class.getSimpleName();
 
     List<Address> geocodeMatches = null;
@@ -45,6 +47,14 @@ public class MainActivity extends FragmentActivity implements
                 .build();
         setContentView(R.layout.activity_maps);
         setContentView(R.layout.activity_main);
+        FAB = (ImageButton) findViewById(R.id.imageButton);
+        FAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(MainActivity.this,"Hello World",Toast.LENGTH_SHORT).show();
+                go(v);
+            }
+        });
     }
 
     @Override

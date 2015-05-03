@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context=".MainActivity">
 
     <include
@@ -31,12 +30,44 @@
         android:hint="Where do you want to go?"
         android:textColorHint="@color/hint"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/frameLayout">
+
+        <!--<TextView
+            android:id="@+id/TextAct1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:text="This is the first Activity, Say Hi"
+            android:textSize="25dp" />
+-->
+        <ImageButton
+            android:layout_margin="15dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/search_m"
+            android:background="@drawable/circle"
+            android:id="@+id/imageButton"
+            android:layout_gravity="center|top" />
+    </FrameLayout>
+
     <Button
         android:id="@+id/Go"
         android:onClick="go"
         android:layout_gravity="center"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:text="GO!" />
+        android:text="GO!"
+        android:ellipsize="middle"
+        style="@style/Base.Widget.AppCompat.Button"
+        android:clickable="true" />
 
 </LinearLayout>
